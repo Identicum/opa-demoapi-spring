@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  api:
+    image: identicum/opa-demoapi-spring:latest
+    restart: always
+    ports:
+      - 8081:8081
+  opa:
+    image: openpolicyagent/opa:latest
+    restart: always
+    ports:
+      - 8181:8181
+    volumes:
+      - ./demoapi.rego:/demoapi.rego
+    command:
+    - "run"
+    - "--server"
+    - "--watch"
+    - "--log-level=debug"
+    - "/demoapi.rego"
