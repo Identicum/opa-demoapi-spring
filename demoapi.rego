@@ -5,16 +5,16 @@ default allow = false
 allow {
 	input.method == "GET"
 	input.path == ["api", "v1", "products"]
-	contains_element(roles_claim, "reader")
+	contains(scope_claim, "api.identicum.com/product:read")
 }
 
 allow {
 	input.method == "POST"
 	input.path == ["api", "v1", "products"]
-	contains_element(roles_claim, "writer")
+	contains(scope_claim, "api.identicum.com/product:write")
 }
 
-roles_claim := roles {
+scope_claim := claims.scope {
 	auth_header := input.headers.authorization
 	startswith(auth_header, "Bearer ")
 	bearer_token := substring(auth_header, count("Bearer "), -1)
@@ -24,10 +24,4 @@ roles_claim := roles {
 
 	# The `io.jwt.decode` function returns an array: [header, payload, signature]
 	[_, claims, _] := io.jwt.decode(bearer_token)
-
-	roles := claims.roles 
 }
-
-contains_element(array, element) = true {
-	array[_] = element
-} else = false { true }
