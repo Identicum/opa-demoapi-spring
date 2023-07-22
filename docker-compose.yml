@@ -20,7 +20,7 @@ services:
     - "--log-level=debug"
     - "/demoapi.rego"
   idp:
-    image: jboss/keycloak:15.0.2
+    image: quay.io/keycloak/keycloak:19.0.3-legacy
     restart: always
     environment:
       KEYCLOAK_USER: admin
