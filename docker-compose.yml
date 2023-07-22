@@ -2,7 +2,7 @@ version: '3'
 
 services:
   api:
-    image: identicum/opa-demoapi-spring:latest
+    image: ghcr.io/identicum/opa-demoapi-spring:latest
     restart: always
     ports:
       - 8081:8081
@@ -32,7 +32,7 @@ services:
     ports:
       - 8080:8080
   spa:
-    image: identicum/spa-demoapp-vue:latest
+    image: ghcr.io/identicum/spa-demoapp-vue:latest
     restart: always
     volumes:
       - ./nginx/conf/server.conf:/usr/local/openresty/nginx/conf/server.conf
